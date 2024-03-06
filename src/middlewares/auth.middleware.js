@@ -13,11 +13,11 @@ export default (req, res, next) => {
             return res.status(401).json({ message: 'Auth error' })
         }
         const decoded = jwt.verify(token, authsecret)
-        
+
         req.user = decoded
         next()
     } catch (error) {
-
+        console.log(error);
         return res.status(401).json({ message: 'Auth error' })
     }
 }
