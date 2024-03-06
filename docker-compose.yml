@@ -1,6 +1,23 @@
 version: "3"
 
 services:
+
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ruyu
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: postgres
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - 5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+
   main:
     container_name: main
     build:
@@ -13,24 +30,9 @@ services:
     ports:
       - 1488:1488
       - 9229:9229
-    command: npm run start:dev
+    command: npm run start
     depends_on:
-    - postgres
-    restart: always
-
-
-
-  postgres:
-    container_name: postgres
-    image: postgres:15
-    env_file:
-      - .env
-    environment:
-      PG_DATA: /var/lib/postgresql/data
-    ports:
-      - 5432:5432
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+      - postgres
     restart: always
 
 volumes:
