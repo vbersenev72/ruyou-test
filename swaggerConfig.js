@@ -8,7 +8,7 @@ const port = process.env.PORT
 
 const options = {
     swaggerDefinition: {
-        restapi: '3.0.0',
+        openapi: '3.0.0',
         info: {
             title: 'ruyu test',
             version: '1.0.0',
@@ -19,8 +19,11 @@ const options = {
                 url: `http://localhost:${port}`,
             },
         ],
+        paths: {
+
+        }
     },
-    apis: ['./src/routes/*.js'],
+    apis: ['./src/routers/*.js'],
 }
 
 const specs = swaggerJsDoc(options)
